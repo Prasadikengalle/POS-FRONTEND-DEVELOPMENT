@@ -3,6 +3,7 @@ import './App.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Home from './pages/Home';
 import Product from './pages/Product';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
     return (
