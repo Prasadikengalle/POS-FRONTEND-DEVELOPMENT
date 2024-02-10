@@ -9,6 +9,7 @@ import UpdateProduct from './pages/UpdateProduct';
 import Category from './pages/Category';
 import ProductsByCategory from './pages/ProductsByCategory';
 import UpdateCategory from './pages/UpdateCategory';
+import Checkout from './pages/Checkout';
 
 const App = () => {
     return (
@@ -22,6 +23,7 @@ const App = () => {
                     <Route path="/categories" element={<Category/>}/>
                     <Route path="/categories/:categoryId/products" element={<ProductsByCategory/>}/>
                     <Route path="/categories/:categoryId" element={<UpdateCategory />} />
+                    <Route path="/checkout" element={<Checkout/>} />
 
                 </Routes>
             </BrowserRouter>
