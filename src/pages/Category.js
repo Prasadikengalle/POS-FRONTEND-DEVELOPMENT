@@ -9,14 +9,35 @@ const Category = () => {
 
     const [categories, setCategories] = useState(null);
 
+    const [name, setName] = useState(null);
+    
+    useEffect(() => {
+        getCategories();
+    },[])
+    
+
     const getCategories = async () => {
         const response = await axios.get("http://localhost:8081/categories");
         setCategories(response.data);
     }
 
-    useEffect(() => {
-        getCategories();
-    },[])
+    const handleName = (event) => {
+        setName(event.target.value);
+    };
+
+    const handleSubmit= async (event) => {
+        event.preventDefault();
+
+        const data = {
+            name: name,
+        };
+
+        const response = await axios.post("http://localhost:8081/categories", data);
+        setCategories([...categories, data]);
+        setName('');
+    }
+
+    
 
     const CategoryCard = ({ category }) => {
 
@@ -63,7 +84,26 @@ const Category = () => {
 
                     {/* Form Section */}
                     <Col md={4}>
-                        
+                    <h1>Add Category</h1>
+                        <form onSubmit={handleSubmit}>
+                            <div className="mb-3">
+                                <label htmlFor="categoryName" className="form-label">
+                                    Category Name
+                                </label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="categoryName"
+                                    required
+                                    onChange={handleName}
+                                    value={name}
+                                />
+                            </div>
+
+                            <button type="submit" className="btn btn-primary">
+                                Save Category
+                            </button>
+                        </form>
                     </Col>
                 </Row>
 
