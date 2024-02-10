@@ -20,12 +20,18 @@ const Home = () => {
         getCategories();
     },[]);
 
+    const navigate = useNavigate();
+
     const getProducts = async () =>{
         const response = await axios.get("http://localhost:8081/products");
         setProducts(response.data);
     };
 
     const ProductCard = ({ product }) => {
+
+        const viewProductDetails = () => {
+            navigate(`/products/${product.id}`);
+        };
         
         return (
             <Card style={{ width: "18rem", margin: "10px" }}>
@@ -35,7 +41,7 @@ const Home = () => {
                         ID: {product.id}
                         
                     </Card.Text>
-                    <Button variant="primary" >
+                    <Button variant="primary" onClick={viewProductDetails}>
                         View Details
                     </Button>
                 </Card.Body>
