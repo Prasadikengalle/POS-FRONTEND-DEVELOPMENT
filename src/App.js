@@ -7,6 +7,7 @@ import SingleProduct from './pages/SingleProduct';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UpdateProduct from './pages/UpdateProduct';
 import Category from './pages/Category';
+import ProductsByCategory from './pages/ProductsByCategory';
 
 const App = () => {
     return (
@@ -18,6 +19,7 @@ const App = () => {
                     <Route path="/products/:id" element={<SingleProduct/>}/>
                     <Route path="products/update/:productId" element={<UpdateProduct/>}/>
                     <Route path="/categories" element={<Category/>}/>
+                    <Route path="/categories/:categoryId/products" element={<ProductsByCategory/>}/>
                 </Routes>
             </BrowserRouter>
         

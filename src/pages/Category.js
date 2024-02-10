@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import NavigationBar from "./NavigationBar";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { Container, Row, Col } from 'react-bootstrap';
 
+
 const Category = () => {
 
     const [categories, setCategories] = useState(null);
 
     const [name, setName] = useState(null);
+
+    const [products, setProducts] = useState(null);
+
+    const params = useParams();
+
     
     useEffect(() => {
         getCategories();
@@ -37,7 +44,15 @@ const Category = () => {
         setName('');
     }
 
-    
+    const navigate = useNavigate();
+
+    const getProductByCategory = async (categoryId) => {
+
+            const response = await axios.get(`http://localhost:8081/categories/${categoryId}/products`);
+            setProducts(response.data);
+            navigate(`/categories/${categoryId}/products`);
+
+    }
 
     const CategoryCard = ({ category }) => {
 
@@ -50,7 +65,8 @@ const Category = () => {
                             ID: {category.id}
                         
                         </Card.Text>
-                        <Button variant="primary"  >
+                        <Button variant="primary" onClick={() => 
+                            getProductByCategory(category.id)} >
                             View Products
                         </Button>
 
