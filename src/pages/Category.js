@@ -56,6 +56,13 @@ const Category = () => {
 
     const CategoryCard = ({ category }) => {
 
+        const navigate = useNavigate(); 
+
+        
+        const handleEditCategory = () => {
+            navigate(`/categories/${category.id}`); 
+        };
+
         return (
 
                 <Card style={{ width: "18rem", margin: "10px" }}>
@@ -70,7 +77,8 @@ const Category = () => {
                             View Products
                         </Button>
 
-                        <Button variant="secondary"  style={{marginLeft: '10px'}}>
+                        <Button variant="secondary" onClick={ () => handleEditCategory(category.
+                            id)} style={{marginLeft: '10px'}}>
                             Edit
                         </Button>
 
