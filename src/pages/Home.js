@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Navbar, Nav , Container, Row, Col, Form , Button , Card} from "react-bootstrap"
-import NavigationBar from './NavigationBar';
+import { Navbar, Nav , Container, Row, Col, Form , Button , Card} from "react-bootstrap";
+import NavigationBar from './NavigationBar'; 
 import axios from "axios";
 
-
 const Home = () => {
-
     const [products, setProducts] = useState(null);
     const [categories, setCategories] = useState(null);
 
@@ -18,41 +16,37 @@ const Home = () => {
     useEffect(() => {
         getProducts();
         getCategories();
-    },[]);
+    }, []);
 
     const navigate = useNavigate();
 
-    const getProducts = async () =>{
-        const response = await axios.get("http://localhost:8081/products");
-        setProducts(response.data);
-    };
+    const getProducts = async () => {
 
-    const ProductCard = ({ product }) => {
-
-        const viewProductDetails = () => {
-            navigate(`/products/${product.id}`);
-        };
         
-        return (
-            <Card style={{ width: "18rem", margin: "10px" }}>
-                <Card.Body>
-                    <Card.Title>{product.name}</Card.Title>
-                    <Card.Text>
-                        ID: {product.id}
-                        
-                    </Card.Text>
-                    <Button variant="primary" onClick={viewProductDetails}>
-                        View Details
-                    </Button>
-                </Card.Body>
-            </Card>
-        );
+
+        try {
+            const response = await axios.get("http://localhost:8081/products");
+            setProducts(response.data);
+
+        } catch (error) {
+            if(error.response.status === 401) {
+                navigate("/login");
+            }
+        }
     };
 
     const getCategories = async () => {
-        const response = await axios.get("http://localhost:8081/categories");
-        setCategories(response.data);
-    }
+        try {
+            const response = await axios.get("http://localhost:8081/categories");
+            setCategories(response.data);
+
+        } catch (error) {
+            if(error.response.status === 401) {
+                navigate("/login");
+            }
+        }
+        
+    };
 
     const handleName = (event) => {
         setName(event.target.value);
@@ -99,18 +93,41 @@ const Home = () => {
                 console.log(response); 
             }
         } catch (error) {
-            console.error("Product Creating Error: ", error);
+            console.error("Error creating product: ", error);
         }
     };
 
+    const ProductCard = ({ product }) => {
+        let navigate = useNavigate();
 
+        const viewProductDetails = () => {
+            navigate(`/products/${product.id}`);
+        };
 
+        return (
+            <Card style={{ width: "18rem", margin: "10px" }}>
+                <Card.Body>
+                    <Card.Title>{product.name}</Card.Title>
+                    <Card.Text>
+                        ID: {product.id}
+                        {/* Add other product details here */}
+                    </Card.Text>
+                    <Button variant="primary" onClick={viewProductDetails}>
+                        View Details
+                    </Button>
+                </Card.Body>
+            </Card>
+        );
+    };
+
+    
     return (
         <>
-            <NavigationBar/>
+            <NavigationBar />
 
             <Container className="mt-5">
                 
+
                 <Row>
                 
                     <Col md={8}>
@@ -124,7 +141,6 @@ const Home = () => {
 
                     <Col md={4}>
                         <h2 className="mb-4 text-center">Add New Product</h2>
-
                         <Form onSubmit={handleSubmit} className="border p-4 rounded">
                             <Form.Group className="mb-3">
                                 <Form.Label>Product Name</Form.Label>
@@ -151,15 +167,11 @@ const Home = () => {
                                 <Button variant="success" type="submit">Save Product</Button>
                             </div>
                         </Form>
-                        
                     </Col>
                 </Row>
             </Container>
-
         </>
-
-        
-    )
-}
+    );
+};
 
 export default Home;

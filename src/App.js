@@ -10,6 +10,9 @@ import Category from './pages/Category';
 import ProductsByCategory from './pages/ProductsByCategory';
 import UpdateCategory from './pages/UpdateCategory';
 import Checkout from './pages/Checkout';
+import Register from './pages/Auth/Register';
+import ProtectedRoutes from './pages/utils/ProtectedRoutes';
+import Login from './pages/Auth/Login';
 
 const App = () => {
     return (
@@ -25,7 +28,12 @@ const App = () => {
                     <Route path="/categories/:categoryId" element={<UpdateCategory />} />
                     <Route path="/checkout" element={<Checkout/>} />
 
+                    <Route path="/register" element={<Register/>}/>
+                    <Route path="/login" element={<Login/>}/>
+
                 </Routes>
+
+                
             </BrowserRouter>
         
     )
